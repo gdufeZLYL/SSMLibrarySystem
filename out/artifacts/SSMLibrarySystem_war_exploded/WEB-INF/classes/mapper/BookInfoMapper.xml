@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BookInfoMapper">
+
+    <!-- 图书查询的sql片段
+    建议是以单表为单位定义查询条件
+    建议将常用的查询条件都写出来
+     -->
+    <sql id="query_book_where">
+        <if test="bookInfo!=null">
+            <if test="bookInfo.bookName!=null and bookInfo.bookName!=''">
+                and  bookName like '%${bookInfo.bookName}%'
+            </if>
+            <if test="bookInfo.bookId!=null">
+                and  bookId = #{bookInfo.bookId}
+            </if>
+            <if test="bookInfo.bookCategoryId!=null">
+                and  bookCategoryId = #{bookInfo.bookCategoryId}
+            </if>
+
+        </if>
+
+    </sql>
+
+    <!-- 商品查询
+    parameterType：输入 查询条件
+    -->
+
+    <select id="findBookList" parameterType="po.BookQueryVo"
+            resultType="po.BookInfo">
+        SELECT * FROM book
+        <where>
+            <include refid="query_book_where"/>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.BookMapper" >
+  <resultMap id="BaseResultMap" type="po.Book" >
+    <id column="bookId" property="bookId" jdbcType="VARCHAR" />
+    <result column="bookName" property="bookName" jdbcType="VARCHAR" />
+    <result column="bookPic" property="bookPic" jdbcType="VARCHAR" />
+    <result column="bookTime" property="bookTime" jdbcType="TIMESTAMP" />
+    <result column="bookCategoryId" property="bookCategoryId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="po.Book" extends="BaseResultMap" >
+    <result column="bookDetail" property="bookDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bookId, bookName, bookPic, bookTime, bookCategoryId
+  </sql>
+  <sql id="Blob_Column_List" >
+    bookDetail
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="po.BookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.BookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from book
+    where bookId = #{bookId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from book
+    where bookId = #{bookId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.BookExample" >
+    delete from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Book" >
+    insert into book (bookId, bookName, bookPic,
+      bookTime, bookCategoryId, bookDetail
+      )
+    values (#{bookId,jdbcType=VARCHAR}, #{bookName,jdbcType=VARCHAR}, #{bookPic,jdbcType=VARCHAR}, 
+      #{bookTime,jdbcType=TIMESTAMP}, #{bookCategoryId,jdbcType=VARCHAR}, #{bookDetail,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="po.Book" >
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        bookId,
+      </if>
+      <if test="bookName != null" >
+        bookName,
+      </if>
+      <if test="bookPic != null" >
+        bookPic,
+      </if>
+      <if test="bookTime != null" >
+        bookTime,
+      </if>
+      <if test="bookCategoryId != null" >
+        bookCategoryId,
+      </if>
+      <if test="bookDetail != null" >
+        bookDetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookName != null" >
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookPic != null" >
+        #{bookPic,jdbcType=VARCHAR},
+      </if>
+      <if test="bookTime != null" >
+        #{bookTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookCategoryId != null" >
+        #{bookCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookDetail != null" >
+        #{bookDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.BookExample" resultType="java.lang.Integer" >
+    select count(*) from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update book
+    <set >
+      <if test="record.bookId != null" >
+        bookId = #{record.bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookName != null" >
+        bookName = #{record.bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookPic != null" >
+        bookPic = #{record.bookPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookTime != null" >
+        bookTime = #{record.bookTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bookCategoryId != null" >
+        bookCategoryId = #{record.bookCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookDetail != null" >
+        bookDetail = #{record.bookDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update book
+    set bookId = #{record.bookId,jdbcType=VARCHAR},
+      bookName = #{record.bookName,jdbcType=VARCHAR},
+      bookPic = #{record.bookPic,jdbcType=VARCHAR},
+      bookTime = #{record.bookTime,jdbcType=TIMESTAMP},
+      bookCategoryId = #{record.bookCategoryId,jdbcType=VARCHAR},
+      bookDetail = #{record.bookDetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update book
+    set bookId = #{record.bookId,jdbcType=VARCHAR},
+      bookName = #{record.bookName,jdbcType=VARCHAR},
+      bookPic = #{record.bookPic,jdbcType=VARCHAR},
+      bookTime = #{record.bookTime,jdbcType=TIMESTAMP},
+      bookCategoryId = #{record.bookCategoryId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Book" >
+    update book
+    <set >
+      <if test="bookName != null" >
+        bookName = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookPic != null" >
+        bookPic = #{bookPic,jdbcType=VARCHAR},
+      </if>
+      <if test="bookTime != null" >
+        bookTime = #{bookTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookCategoryId != null" >
+        bookCategoryId = #{bookCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookDetail != null" >
+        bookDetail = #{bookDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where bookId = #{bookId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="po.Book" >
+    update book
+    set bookName = #{bookName,jdbcType=VARCHAR},
+      bookPic = #{bookPic,jdbcType=VARCHAR},
+      bookTime = #{bookTime,jdbcType=TIMESTAMP},
+      bookCategoryId = #{bookCategoryId,jdbcType=VARCHAR},
+      bookDetail = #{bookDetail,jdbcType=LONGVARCHAR}
+    where bookId = #{bookId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Book" >
+    update book
+    set bookName = #{bookName,jdbcType=VARCHAR},
+      bookPic = #{bookPic,jdbcType=VARCHAR},
+      bookTime = #{bookTime,jdbcType=TIMESTAMP},
+      bookCategoryId = #{bookCategoryId,jdbcType=VARCHAR}
+    where bookId = #{bookId,jdbcType=VARCHAR}
+  </update>
+</mapper>

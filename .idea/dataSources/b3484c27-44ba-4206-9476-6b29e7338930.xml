@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="ssmlibrarysystem@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="ssmlibrarysystem">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="bbs2009"/>
+    <schema id="4" parent="1" name="db_bank"/>
+    <schema id="5" parent="1" name="db_book"/>
+    <schema id="6" parent="1" name="hibernate"/>
+    <schema id="7" parent="1" name="hibernate5"/>
+    <schema id="8" parent="1" name="homework3"/>
+    <schema id="9" parent="1" name="information_schema"/>
+    <schema id="10" parent="1" name="javabean"/>
+    <schema id="11" parent="1" name="library"/>
+    <schema id="12" parent="1" name="mybatis"/>
+    <schema id="13" parent="1" name="mysql"/>
+    <schema id="14" parent="1" name="performance_schema"/>
+    <schema id="15" parent="1" name="school"/>
+    <schema id="16" parent="1" name="scraping"/>
+    <schema id="17" parent="1" name="spring"/>
+    <schema id="18" parent="1" name="sys"/>
+    <table id="19" parent="2" name="book"/>
+    <table id="20" parent="2" name="category"/>
+    <column id="21" parent="19" name="book_id">
+      <Position>1</Position>
+      <Comment>书号</Comment>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="22" parent="19" name="book_name">
+      <Position>2</Position>
+      <Comment>书名</Comment>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="23" parent="19" name="book_detail">
+      <Position>3</Position>
+      <Comment>书描述</Comment>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="24" parent="19" name="book_pic">
+      <Position>4</Position>
+      <Comment>书图片</Comment>
+      <DataType>varchar(64)|0</DataType>
+    </column>
+    <column id="25" parent="19" name="book_time">
+      <Position>5</Position>
+      <Comment>书出版日期</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="26" parent="19" name="book_category_id">
+      <Position>6</Position>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <index id="27" parent="19" name="book_category_id">
+      <ColNames>book_category_id</ColNames>
+    </index>
+    <key id="28" parent="19" name="PRIMARY">
+      <ColNames>book_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="29" parent="19" name="book_ibfk_1">
+      <ColNames>book_category_id</ColNames>
+      <RefSchemaName>ssmlibrarysystem</RefSchemaName>
+      <RefTableName>category</RefTableName>
+      <RefColNames>category_id</RefColNames>
+      <OnUpdate>update</OnUpdate>
+      <OnDelete>set-null</OnDelete>
+    </foreign-key>
+    <column id="30" parent="20" name="category_id">
+      <Position>1</Position>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="31" parent="20" name="category_name">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <key id="32" parent="20" name="PRIMARY">
+      <ColNames>category_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
